@@ -1,0 +1,296 @@
+import { useEffect, useState } from "react";
+import {
+  Mic,
+  MicOff,
+  UserPlus,
+  Settings,
+  HelpCircle,
+  Plus,
+  Minus,
+  XCircle,
+  Receipt,
+  PlusCircle,
+  Smartphone,
+  CreditCard,
+  Banknote,
+  Layers,
+  MapPin,
+  Wifi,
+} from "lucide-react";
+
+const VoiceAIPOS = () => {
+  const [cartItems, setCartItems] = useState([
+    { id: "01", name: "Dairy Milk Silk (60g)", sku: "CHOC-DM-01", price: 40.0, qty: 2 },
+    { id: "02", name: "Sprite (500ml)", sku: "BEV-SP-02", price: 45.0, qty: 1 },
+  ]);
+
+  const [isListening, setIsListening] = useState(true);
+  const [paymentMethod, setPaymentMethod] = useState("UPI");
+  const [locationLabel, setLocationLabel] = useState("Locating...");
+  const [connectivityLabel, setConnectivityLabel] = useState("Checking...");
+  const [connectivityTone, setConnectivityTone] = useState("bg-amber-500/20 text-amber-100");
+
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+
+    const updateConnectivity = () => {
+      const online = navigator.onLine;
+      setConnectivityLabel(online ? "Online" : "Offline");
+      setConnectivityTone(online ? "bg-emerald-500/20 text-emerald-100" : "bg-rose-500/20 text-rose-100");
+    };
+
+    updateConnectivity();
+    window.addEventListener("online", updateConnectivity);
+    window.addEventListener("offline", updateConnectivity);
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setLocationLabel(`${latitude.toFixed(2)}, ${longitude.toFixed(2)}`);
+        },
+        () => {
+          setLocationLabel("Location unavailable");
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+      );
+    } else {
+      setLocationLabel("Location unavailable");
+    }
+
+    return () => {
+      window.removeEventListener("online", updateConnectivity);
+      window.removeEventListener("offline", updateConnectivity);
+    };
+  }, []);
+
+  const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.qty, 0);
+  const gst = subtotal * 0.18;
+  const discount = 10.0;
+  const total = subtotal + gst - discount;
+
+  const updateQty = (id, delta) => {
+    setCartItems(
+      cartItems
+        .map((item) => (item.id === id ? { ...item, qty: Math.max(0, item.qty + delta) } : item))
+        .filter((item) => item.qty > 0)
+    );
+  };
+
+  return (
+    <div className="flex flex-col h-screen bg-[#F8F9FB] font-sans text-slate-800">
+      <header className="bg-[#1E3A8A] text-white px-6 py-3 flex justify-between items-center shadow-md">
+        <h1 className="text-2xl font-bold tracking-tight">Voice AI POS</h1>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-[11px] font-medium">
+            <MapPin className="w-4 h-4" />
+            <span>{locationLabel}</span>
+          </div>
+          <div className={`flex items-center gap-2 rounded-full px-3 py-1.5 text-[11px] font-medium ${connectivityTone}`}>
+            <Wifi className="w-4 h-4" />
+            <span>{connectivityLabel}</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm opacity-90">
+            <div className="w-8 h-8 rounded-full bg-blue-700 flex items-center justify-center">
+              <span className="text-xs font-bold">T</span>
+            </div>
+            <span>Cashier: Tanay | 10:45 AM</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <Settings className="w-5 h-5 cursor-pointer hover:opacity-80" />
+            <HelpCircle className="w-5 h-5 cursor-pointer hover:opacity-80" />
+          </div>
+        </div>
+      </header>
+
+      <main className="flex-1 flex overflow-hidden p-6 gap-6">
+        <div className="w-[320px] flex flex-col gap-4">
+          <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xs font-bold text-slate-500 uppercase tracking-wider">Customer Information</h2>
+              <UserPlus className="w-5 h-5 text-[#1E3A8A] cursor-pointer" />
+            </div>
+            <div className="mb-4">
+              <label className="text-xs text-slate-400 block mb-1">Name</label>
+              <p className="font-semibold">Walk-in Customer</p>
+            </div>
+            <div>
+              <label className="text-xs text-slate-400 block mb-1">Phone</label>
+              <input
+                type="text"
+                placeholder="Enter phone number..."
+                className="w-full px-3 py-2 bg-slate-100 border border-transparent rounded-lg text-sm focus:outline-none focus:border-blue-500"
+              />
+            </div>
+          </div>
+
+          <div className="flex-1 bg-slate-200 rounded-xl overflow-hidden flex flex-col border border-slate-300">
+            <div className={`px-4 py-2 flex items-center gap-2 ${isListening ? "bg-[#057A55] text-white" : "bg-slate-500 text-white"}`}>
+              <div className={`w-2 h-2 rounded-full bg-white ${isListening ? "animate-pulse" : ""}`}></div>
+              <span className="text-xs font-bold uppercase tracking-widest">{isListening ? "Listening..." : "Muted"}</span>
+            </div>
+            <div className="p-5 flex flex-col gap-6">
+              <div>
+                <h3 className="text-xs font-bold text-slate-500 italic mb-2">System Prompt</h3>
+                <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm min-h-[60px]">
+                  <p className="text-[#1E3A8A] font-medium">Ready. Tell me the products.</p>
+                </div>
+              </div>
+              <div>
+                <h3 className="text-xs font-bold text-slate-500 italic mb-2">Last Command</h3>
+                <div className="bg-[#86EFAC] p-4 rounded-xl border border-[#4ADE80] shadow-sm">
+                  <p className="text-slate-900 font-bold mb-2">"Add two Dairy Milk, one Sprite."</p>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="bg-white/50 text-[10px] px-2 py-1 rounded-full border border-green-500 flex items-center gap-1 font-bold">
+                      ✓ DAIRY MILK (2)
+                    </span>
+                    <span className="bg-white/50 text-[10px] px-2 py-1 rounded-full border border-green-500 flex items-center gap-1 font-bold">
+                      ✓ SPRITE (1)
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex-1 bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col overflow-hidden">
+          <div className="p-6 border-b border-slate-100 flex items-center gap-3">
+            <h2 className="text-3xl font-black text-slate-800">Active Cart</h2>
+            <span className="bg-[#1E3A8A] text-white text-xs px-3 py-1 rounded-full font-bold">{cartItems.length} Items</span>
+          </div>
+
+          <div className="flex-1 overflow-auto">
+            <table className="w-full text-left">
+              <thead className="sticky top-0 bg-slate-50 text-[10px] font-bold text-slate-400 uppercase tracking-widest border-b border-slate-100">
+                <tr>
+                  <th className="px-6 py-3 w-16 text-center">No.</th>
+                  <th className="px-6 py-3">Product</th>
+                  <th className="px-6 py-3 w-32 text-center">Qty</th>
+                  <th className="px-6 py-3 w-24 text-right">Price</th>
+                  <th className="px-6 py-3 w-24 text-right">Total</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-50">
+                {cartItems.map((item) => (
+                  <tr key={item.id} className="group hover:bg-slate-50/50">
+                    <td className="px-6 py-6 text-center text-slate-400 font-medium">{item.id}</td>
+                    <td className="px-6 py-6">
+                      <p className="font-bold text-slate-800">{item.name}</p>
+                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-tighter">SKU: {item.sku}</p>
+                    </td>
+                    <td className="px-6 py-6">
+                      <div className="flex items-center justify-center gap-3 bg-slate-100 rounded-lg p-1 w-fit mx-auto">
+                        <button onClick={() => updateQty(item.id, -1)} className="p-1 hover:text-red-500 transition-colors">
+                          <Minus className="w-4 h-4" />
+                        </button>
+                        <span className="w-4 text-center font-bold">{item.qty}</span>
+                        <button onClick={() => updateQty(item.id, 1)} className="p-1 hover:text-blue-500 transition-colors">
+                          <Plus className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </td>
+                    <td className="px-6 py-6 text-right font-medium text-slate-600">₹{item.price.toFixed(2)}</td>
+                    <td className="px-6 py-6 text-right font-bold text-[#1E3A8A]">₹{(item.price * item.qty).toFixed(2)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div className="w-[360px] flex flex-col gap-4">
+          <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 flex flex-col gap-6">
+            <h2 className="text-3xl font-black text-slate-800">Bill Summary</h2>
+
+            <div className="space-y-4">
+              <div className="flex justify-between text-slate-500 font-medium">
+                <span>Subtotal</span>
+                <span className="text-slate-800 font-bold">₹{subtotal.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between text-slate-500 font-medium">
+                <span>GST (18%)</span>
+                <span className="text-slate-800 font-bold">₹{gst.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between text-red-500 font-medium italic">
+                <span>Discount</span>
+                <span className="font-bold">-₹{discount.toFixed(2)}</span>
+              </div>
+              <div className="pt-4 border-t border-slate-100">
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Grand Total</p>
+                <p className="text-[44px] font-black text-[#1E3A8A] leading-none tracking-tight">₹{total.toFixed(2)}</p>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Payment Method</p>
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { id: "Cash", icon: Banknote },
+                  { id: "UPI", icon: Smartphone },
+                  { id: "Card", icon: CreditCard },
+                  { id: "Mixed", icon: Layers },
+                ].map((method) => (
+                  <button
+                    key={method.id}
+                    onClick={() => setPaymentMethod(method.id)}
+                    className={`flex flex-col items-center justify-center p-4 rounded-xl border transition-all ${
+                      paymentMethod === method.id
+                        ? "bg-[#E0E7FF] border-[#1E3A8A] text-[#1E3A8A]"
+                        : "bg-slate-50 border-slate-200 text-slate-600 hover:border-slate-300"
+                    }`}
+                  >
+                    <method.icon className="w-6 h-6 mb-2" />
+                    <span className="text-xs font-bold">{method.id}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-slate-50 p-3 rounded-lg flex justify-between items-center">
+              <span className="text-xs font-bold text-slate-500">Status:</span>
+              <span className="text-xs font-bold text-orange-500 animate-pulse">Waiting...</span>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer className="bg-white border-t border-slate-200 p-4 flex justify-between items-center shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+        <div className="flex gap-3">
+          <button
+            onClick={() => setIsListening(!isListening)}
+            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all ${
+              isListening ? "bg-[#1E3A8A] text-white" : "bg-slate-100 text-slate-600"
+            }`}
+          >
+            {isListening ? <Mic className="w-5 h-5" /> : <MicOff className="w-5 h-5" />}
+            {isListening ? "Start Listening" : "Resume Listening"}
+          </button>
+          <button className="flex items-center gap-2 bg-red-50 text-red-600 px-6 py-3 rounded-xl font-bold hover:bg-red-100 transition-all">
+            <MicOff className="w-5 h-5" />
+            Stop Listening
+          </button>
+        </div>
+
+        <div className="h-8 w-px bg-slate-200 mx-4 hidden lg:block"></div>
+
+        <div className="flex gap-3 flex-1 lg:flex-initial">
+          <button className="flex flex-col items-center justify-center px-4 hover:text-[#1E3A8A] transition-colors">
+            <XCircle className="w-6 h-6 mb-1" />
+            <span className="text-[10px] font-bold uppercase tracking-tighter text-slate-400">Cancel Bill</span>
+          </button>
+          <button className="flex-1 lg:flex-initial bg-[#E0E7FF] text-[#1E3A8A] px-10 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-[#C7D2FE] transition-all">
+            <PlusCircle className="w-5 h-5" />
+            New Billing
+          </button>
+          <button className="flex-1 lg:flex-initial bg-[#057A55] text-white px-10 py-3 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-green-100 hover:bg-[#046C4E] transition-all">
+            <Receipt className="w-5 h-5" />
+            Generate Invoice
+          </button>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default VoiceAIPOS;

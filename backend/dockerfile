@@ -1,0 +1,39 @@
+FROM python:3.11-slim AS base
+
+# System deps needed for: psycopg2, pyzbar (zbar), pillow, reportlab, audio libs
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libpq-dev \
+    libzbar0 \
+    libjpeg-dev \
+    zlib1g-dev \
+    tesseract-ocr \
+    ffmpeg \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Install deps first for better layer caching
+COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt \
+    && pip install --no-cache-dir gunicorn
+
+COPY . .
+
+# Non-root user for security
+RUN useradd --create-home --shell /bin/bash appuser \
+    && mkdir -p /app/storage/invoices /app/storage/receipts /app/storage/audio /app/storage/backups \
+    && chown -R appuser:appuser /app
+USER appuser
+
+EXPOSE 8000
+
+CMD ["gunicorn", "backend.main:app", \
+     "--workers", "4", \
+     "--worker-class", "uvicorn.workers.UvicornWorker", \
+     "--bind", "0.0.0.0:8000", \
+     "--timeout", "60", \
+     "--access-logfile", "-", \
+     "--error-logfile", "-"]

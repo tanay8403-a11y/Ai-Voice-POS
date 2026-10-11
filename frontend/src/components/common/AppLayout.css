@@ -1,0 +1,341 @@
+.app-layout {
+  --app-ink: #201e1a;
+  --app-muted: #777166;
+  --app-line: #e5dfd4;
+  --app-paper: #f7f4ed;
+  --app-panel: #fbf9f5;
+  --app-orange: #e66b22;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: clip;
+  background:
+    radial-gradient(ellipse at 48% 20%, rgb(235 224 204 / 17%), transparent 42%),
+    var(--app-paper);
+  color: var(--app-ink);
+}
+
+.app-topbar {
+  position: sticky;
+  top: 0;
+  flex: 0 0 auto;
+  border-color: rgb(40 36 29 / 8%) !important;
+  background: rgb(250 248 243 / 95%) !important;
+  box-shadow: 0 2px 10px rgb(39 33 23 / 3%) !important;
+  backdrop-filter: blur(12px);
+}
+
+.app-topbar-inner {
+  width: 100%;
+  max-width: 1920px;
+  min-height: 60px !important;
+  padding-inline: clamp(14px, 2.6vw, 42px) !important;
+}
+
+.app-topbar-brand {
+  gap: 9px !important;
+  color: var(--app-ink) !important;
+  font-size: 14px !important;
+  letter-spacing: -0.025em !important;
+}
+
+.app-topbar-brand-mark {
+  width: 31px;
+  height: 31px;
+  display: inline-grid;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 9px;
+  background: var(--app-ink);
+  color: #f28a39;
+}
+
+.app-layout .app-topbar nav[aria-label="Main navigation"] {
+  gap: 4px;
+}
+
+.app-layout .app-nav-link {
+  min-height: 36px;
+  gap: 7px;
+  padding: 0 12px;
+  border-radius: 8px;
+  font-size: 10px;
+  letter-spacing: 0.045em;
+  transition: color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+}
+
+.app-layout .app-nav-active {
+  background: #211f1c !important;
+  color: #fff !important;
+  box-shadow: 0 2px 5px rgb(28 27 25 / 12%) !important;
+}
+
+.app-layout .app-nav-inactive {
+  color: #686257 !important;
+}
+
+.app-layout .app-nav-inactive:hover {
+  background: #f0ede6 !important;
+  color: var(--app-ink) !important;
+}
+
+.app-layout .app-topbar button[title="Log out"],
+.app-layout .app-topbar button[aria-label="Open navigation menu"],
+.app-layout .app-topbar button[aria-label="Close navigation menu"],
+.app-layout .app-topbar a[aria-label="Settings"] {
+  border: 1px solid transparent;
+  color: #625c52 !important;
+}
+
+.app-layout .app-topbar button[title="Log out"]:hover {
+  border-color: #f1d6d1;
+  background: #fff4f2 !important;
+  color: #a7352c !important;
+}
+
+.app-layout .app-topbar a[aria-label="Settings"]:hover,
+.app-layout .app-topbar button[aria-label="Open navigation menu"]:hover,
+.app-layout .app-topbar button[aria-label="Close navigation menu"]:hover {
+  border-color: var(--app-line);
+  background: #f0ede6 !important;
+}
+
+.app-layout .app-topbar .rounded-full.bg-\[\#00236f\] {
+  background: var(--app-ink) !important;
+  color: white !important;
+}
+
+.app-main {
+  width: 100%;
+  max-width: 1920px;
+  min-width: 0;
+  min-height: calc(100vh - 60px);
+  min-height: calc(100dvh - 60px);
+  flex: 1 0 auto;
+  margin-inline: auto;
+  padding: clamp(14px, 2vw, 30px) clamp(14px, 2.6vw, 42px) clamp(20px, 2.8vw, 40px) !important;
+  overflow-x: clip;
+}
+
+.app-main > * {
+  width: 100%;
+  min-width: 0;
+  max-width: 100% !important;
+}
+
+.app-main .grid > *,
+.app-main .flex > * {
+  min-width: 0;
+}
+
+.app-main [class*="max-w-[1720px]"] {
+  max-width: 1840px !important;
+}
+
+.app-main section[class*="bg-gradient-to-r"] {
+  border: 1px solid var(--app-line);
+  border-radius: 17px;
+  background:
+    radial-gradient(ellipse at 100% 0%, rgb(230 107 34 / 7%), transparent 42%),
+    linear-gradient(120deg, #f1eee7, #fbf9f5 72%) !important;
+  box-shadow: 0 5px 16px rgb(39 33 23 / 4%), inset 0 1px 0 rgb(255 255 255 / 75%);
+  color: var(--app-ink) !important;
+}
+
+.app-main section[class*="bg-gradient-to-r"] [class~="text-white"],
+.app-main section[class*="bg-gradient-to-r"] [class~="text-blue-50"],
+.app-main section[class*="bg-gradient-to-r"] [class~="text-blue-100"] {
+  color: #5f594f !important;
+}
+
+.app-main section[class*="bg-gradient-to-r"] [class*="border-white/"] {
+  border-color: #e4ded3 !important;
+}
+
+.app-main section[class*="bg-gradient-to-r"] [class*="bg-white/"] {
+  background-color: #f4f0e8 !important;
+}
+
+.app-main section[class*="bg-gradient-to-r"] [class*="text-emerald-200"],
+.app-main section[class*="bg-gradient-to-r"] [class*="text-cyan-200"] {
+  color: #58764d !important;
+}
+
+.app-main section[class*="bg-gradient-to-r"] [class*="bg-emerald-300"] {
+  background-color: #228348 !important;
+}
+
+.app-main section[class*="bg-gradient-to-r"] [class*="bg-[#1e3a8a]"],
+.app-main section[class*="bg-gradient-to-r"] [class*="bg-[#0b1e4a]"],
+.app-main section[class*="bg-gradient-to-r"] [class*="bg-[#254a9b]"] {
+  background-color: #e9e4da !important;
+}
+
+.app-main .bg-white {
+  background-color: var(--app-panel) !important;
+}
+
+.app-main .border-slate-200,
+.app-main .border-slate-200\/70 {
+  border-color: var(--app-line) !important;
+}
+
+.app-main input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+.app-main select,
+.app-main textarea {
+  max-width: 100%;
+  border-color: #ded8cc;
+  background-color: #fffdfa;
+  color: var(--app-ink);
+}
+
+.app-main input:focus,
+.app-main select:focus,
+.app-main textarea:focus {
+  border-color: #d69b71;
+  outline-color: transparent;
+  box-shadow: 0 0 0 3px rgb(230 107 34 / 10%);
+}
+
+.app-main table {
+  display: table;
+  width: 100%;
+  max-width: 100%;
+  overflow: visible;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.app-main table.inventory-data-table {
+  width: 1400px;
+  min-width: 1400px;
+  max-width: none;
+  table-layout: fixed;
+}
+
+.inventory-data-table .inventory-product-column {
+  width: 19%;
+}
+
+.inventory-data-table .inventory-category-column {
+  width: 11%;
+}
+
+.inventory-data-table .inventory-money-column {
+  width: 12%;
+}
+
+.inventory-data-table .inventory-margin-column {
+  width: 14%;
+}
+
+.inventory-data-table .inventory-stock-column {
+  width: 20%;
+}
+
+.inventory-data-table .inventory-actions-column {
+  width: 12%;
+}
+
+.inventory-data-table th,
+.inventory-data-table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.inventory-data-table th {
+  white-space: nowrap;
+}
+
+.inventory-data-table th:nth-child(5),
+.inventory-data-table td:nth-child(5) {
+  padding-right: 22px;
+  border-right: 1px solid var(--app-line);
+}
+
+.inventory-data-table th:nth-child(6),
+.inventory-data-table td:nth-child(6) {
+  padding-left: 22px;
+  border-left: 1px solid var(--app-line);
+  background-color: rgb(244 240 232 / 55%);
+}
+
+.inventory-data-table thead th:nth-child(6) {
+  background-color: #f0ece4;
+}
+
+.app-main img,
+.app-main canvas,
+.app-main svg {
+  max-width: 100%;
+}
+
+.app-main button,
+.app-main a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app-main :focus-visible,
+.app-layout .app-topbar :focus-visible {
+  outline: 2px solid var(--app-orange);
+  outline-offset: 2px;
+}
+
+@media (min-width: 1280px) {
+  .app-main {
+    padding-top: 26px !important;
+  }
+}
+
+@media (max-width: 1279px) {
+  .app-layout .app-topbar nav[aria-label="Main navigation mobile"] {
+    border-color: rgb(40 36 29 / 8%);
+    background: rgb(250 248 243 / 98%);
+  }
+
+  .app-layout .app-topbar nav[aria-label="Main navigation mobile"] > div {
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+@media (max-width: 640px) {
+  .app-topbar-inner {
+    min-height: 56px !important;
+    gap: 8px !important;
+    padding-inline: 12px !important;
+  }
+
+  .app-topbar-brand {
+    font-size: 13px !important;
+  }
+
+  .app-main {
+    min-height: calc(100dvh - 56px);
+    padding: 14px 12px 24px !important;
+  }
+
+  .app-main [class*="min-h-[560px]"] {
+    min-height: 460px !important;
+  }
+
+  .app-main [class*="min-[900px]:grid-cols"] {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .app-main [class*="grid-cols-2"],
+  .app-main [class*="sm:grid-cols-2"],
+  .app-main [class*="xl:grid-cols-2"] {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-layout *,
+  .app-layout *::before,
+  .app-layout *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

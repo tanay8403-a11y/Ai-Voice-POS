@@ -1,0 +1,19 @@
+{
+  "item_added": "Added {quantity} {item} to the cart.",
+  "item_removed": "{item} removed from the cart.",
+  "item_not_found": "Sorry, I couldn't find '{item}' in the catalog.",
+  "quantity_updated": "Quantity of {item} updated to {quantity}.",
+  "discount_applied": "Discount applied to the cart.",
+  "checkout_confirm_prompt": "Total is {total} rupees. Please confirm to complete checkout.",
+  "checkout_complete": "Checkout complete. Total is {total} rupees. Thank you!",
+  "sale_cancelled": "Sale cancelled. Cart cleared.",
+  "cart_empty": "Your cart is currently empty.",
+  "unknown_command": "Sorry, I didn't understand that. Could you repeat it?",
+  "listening_prompt": "I'm listening. Go ahead.",
+  "low_stock_warning": "Warning: only {quantity} units of {item} left in stock.",
+  "out_of_stock": "Sorry, {item} is currently out of stock.",
+  "price_lookup_result": "{item} costs {price} rupees.",
+  "welcome_message": "Welcome! How can I help you with this sale?",
+  "payment_success": "Payment received successfully.",
+  "payment_failed": "Payment failed. Please try again."
+}

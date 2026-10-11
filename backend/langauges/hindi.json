@@ -1,0 +1,19 @@
+{
+  "item_added": "{item} की {quantity} मात्रा कार्ट में जोड़ दी गई है।",
+  "item_removed": "{item} को कार्ट से हटा दिया गया है।",
+  "item_not_found": "क्षमा करें, '{item}' कैटलॉग में नहीं मिला।",
+  "quantity_updated": "{item} की मात्रा {quantity} कर दी गई है।",
+  "discount_applied": "कार्ट पर छूट लागू कर दी गई है।",
+  "checkout_confirm_prompt": "कुल राशि {total} रुपये है। कृपया चेकआउट की पुष्टि करें।",
+  "checkout_complete": "चेकआउट पूरा हुआ। कुल राशि {total} रुपये है। धन्यवाद!",
+  "sale_cancelled": "बिक्री रद्द कर दी गई। कार्ट खाली कर दिया गया है।",
+  "cart_empty": "आपका कार्ट अभी खाली है।",
+  "unknown_command": "क्षमा करें, मैं समझ नहीं पाया। कृपया दोबारा बताएं।",
+  "listening_prompt": "मैं सुन रहा हूं, बताइए।",
+  "low_stock_warning": "चेतावनी: {item} के केवल {quantity} यूनिट बचे हैं।",
+  "out_of_stock": "क्षमा करें, {item} अभी स्टॉक में नहीं है।",
+  "price_lookup_result": "{item} की कीमत {price} रुपये है।",
+  "welcome_message": "स्वागत है! मैं इस बिक्री में आपकी कैसे मदद कर सकता हूं?",
+  "payment_success": "भुगतान सफलतापूर्वक प्राप्त हुआ।",
+  "payment_failed": "भुगतान असफल रहा। कृपया पुनः प्रयास करें।"
+}

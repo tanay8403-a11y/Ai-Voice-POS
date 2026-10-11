@@ -1,0 +1,174 @@
+@import "tailwindcss";
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  min-width: 320px;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: #f7f8fa;
+  color: #1e293b;
+}
+
+/* Links */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Buttons */
+button {
+  cursor: pointer;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f5f7fa;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: #0b1e4a;
+  color: white;
+  gap: 1rem;
+}
+
+.app-brand {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.app-nav {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.app-nav-link {
+  color: #d7def0;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+}
+
+.app-nav-link.active {
+  background: rgba(255, 255, 255, 0.16);
+  color: white;
+}
+
+.app-user {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.app-user button {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+}
+
+.app-content {
+  flex: 1;
+}
+
+.app-main {
+  overflow-x: clip;
+}
+
+.voice-mic-listening {
+  position: relative;
+  animation: voice-mic-breathe 1.5s ease-in-out infinite;
+}
+
+.voice-mic-listening::before,
+.voice-mic-listening::after {
+  position: absolute;
+  inset: -7px;
+  border: 2px solid rgb(225 29 72 / 35%);
+  border-radius: 9999px;
+  content: "";
+  pointer-events: none;
+  animation: voice-mic-ring 1.8s ease-out infinite;
+}
+
+.voice-mic-listening::after {
+  animation-delay: 0.9s;
+}
+
+.voice-mic-icon {
+  animation: voice-mic-icon 0.9s ease-in-out infinite alternate;
+}
+
+.voice-mic-wave {
+  position: absolute;
+  right: -20px;
+  display: flex;
+  height: 32px;
+  align-items: center;
+  gap: 3px;
+}
+
+.voice-mic-wave span {
+  width: 3px;
+  height: 8px;
+  border-radius: 9999px;
+  background: #e11d48;
+  animation: voice-wave 0.7s ease-in-out infinite alternate;
+}
+
+.voice-mic-wave span:nth-child(2) {
+  height: 20px;
+  animation-delay: 0.2s;
+}
+
+.voice-mic-wave span:nth-child(3) {
+  height: 13px;
+  animation-delay: 0.4s;
+}
+
+@keyframes voice-mic-breathe {
+  50% { transform: scale(1.045); }
+}
+
+@keyframes voice-mic-ring {
+  0% { opacity: 0.55; transform: scale(0.92); }
+  100% { opacity: 0; transform: scale(1.3); }
+}
+
+@keyframes voice-mic-icon {
+  to { transform: translateY(-2px); }
+}
+
+@keyframes voice-wave {
+  to { transform: scaleY(0.45); }
+}
+
+@media (max-width: 639px) {
+  .app-main {
+    padding-inline: 0.75rem;
+    padding-block: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .voice-mic-listening,
+  .voice-mic-listening::before,
+  .voice-mic-listening::after,
+  .voice-mic-icon,
+  .voice-mic-wave span {
+    animation: none;
+  }
+}
